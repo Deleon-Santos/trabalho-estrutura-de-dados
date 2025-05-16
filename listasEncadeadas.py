@@ -2,8 +2,8 @@
 
 
 class Nodo:
-    def __init__(self, NumeroDeChamada, corPrioridade):
-        self.NumeroDeChamada = NumeroDeChamada
+    def __init__(self, numeroDeChamada, corPrioridade):
+        self.numeroDeChamada = numeroDeChamada
         self.corPrioridade = corPrioridade
         self.seguinte = None
 
@@ -18,34 +18,34 @@ class ListaEspera:
         if not self.head:
             self.head = nodo
             return
-        numeroAtual = self.head
-        while numeroAtual.seguinte:
-            numeroAtual = numeroAtual.seguinte
-        numeroAtual.seguinte = nodo
+        paciente = self.head
+        while paciente.seguinte:
+            paciente = paciente.seguinte
+        paciente.seguinte = nodo
 
     def inserirComPrioridade(self, nodo):
         if not self.head or self.head.corPrioridade == "V":
             nodo.seguinte = self.head
             self.head = nodo
             return
-        numeroAtual = self.head
-        while numeroAtual.seguinte and numeroAtual.seguinte.corPrioridade == "A":
-            numeroAtual = numeroAtual.seguinte
-        nodo.seguinte = numeroAtual.seguinte
-        numeroAtual.seguinte = nodo
+        paciente = self.head
+        while paciente.seguinte and paciente.seguinte.corPrioridade == "A":
+            paciente = paciente.seguinte
+        nodo.seguinte = paciente.seguinte
+        paciente.seguinte = nodo
 
     def inserir(self):
         while True:
             corPrioridade = input(
                 "Informe o nivel de prioridade: A- para Amarelo, V- para Verde ou S- Sair: ").strip().upper()
             if corPrioridade == "V":
-                NumeroDeChamada = self.contador_v
+                numeroDeChamada = self.contador_v
                 self.contador_v += 1
-                print(f">>Senha Verde {NumeroDeChamada} adicionado à fila.")
+                print(f">>Senha Verde {numeroDeChamada} adicionado à fila.")
             elif corPrioridade == "A":
-                NumeroDeChamada = self.contador_a
+                numeroDeChamada = self.contador_a
                 self.contador_a += 1
-                print(f">>Senha Amarelo {NumeroDeChamada} adicionado à fila.")
+                print(f">>Senha Amarelo {numeroDeChamada} adicionado à fila.")
             elif corPrioridade == "S":
 
                 return
@@ -53,7 +53,7 @@ class ListaEspera:
                 print("Cor invalida.")
                 continue
 
-            nodo = Nodo(NumeroDeChamada, corPrioridade)
+            nodo = Nodo(numeroDeChamada, corPrioridade)
             if not self.head:
                 self.head = nodo
             elif corPrioridade == "V":
@@ -62,15 +62,15 @@ class ListaEspera:
                 self.inserirComPrioridade(nodo)
 
     def imprimirListaEspera(self):
-        numeroAtual = self.head
-        if not numeroAtual:
+        paciente = self.head
+        if not paciente:
             print("A fila esta vazia.")
             return
         print("\nLista de Espera:")
-        while numeroAtual:
+        while paciente:
             print(
-                f"Cartão {numeroAtual.corPrioridade}{numeroAtual.NumeroDeChamada}")
-            numeroAtual = numeroAtual.seguinte
+                f"Cartão {paciente.corPrioridade}{paciente.numeroDeChamada}")
+            paciente = paciente.seguinte
 
     def atenderPaciente(self):
         while True:
@@ -80,7 +80,7 @@ class ListaEspera:
             atendido = self.head
             self.head = self.head.seguinte
             print(
-                f">>Chamando paciente com Senha {atendido.corPrioridade}{atendido.NumeroDeChamada} para atendimento.")
+                f">>Chamando paciente com Senha {atendido.corPrioridade}{atendido.numeroDeChamada} para atendimento.")
             acao = input(
                 "Para continuar atendendo digite 'S' ").strip().upper()
             if acao == "S":
